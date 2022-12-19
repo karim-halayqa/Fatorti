@@ -21,22 +21,22 @@ public class BillServiceImplementation implements BillService {
     public BillServiceImplementation() {
         dummyBills = new ArrayList<>();
         // Add paid bills
-        dummyBills.add(new Bill(new Date(2022, 7, 1), Company.ELECTRICITY, 100.00, true));
-        dummyBills.add(new Bill(new Date(2022, 7, 15), Company.WATER, 250.00, true));
-        dummyBills.add(new Bill(new Date(2022, 8, 1), Company.GAZ, 75.00, true));
-        dummyBills.add(new Bill(new Date(2022, 8, 15), Company.ELECTRICITY, 125.00, true));
-        dummyBills.add(new Bill(new Date(2022, 9, 1), Company.WATER, 50.00, true));
-        dummyBills.add(new Bill(new Date(2022, 9, 15), Company.GAZ, 200.00, true));
-        dummyBills.add(new Bill(new Date(2022, 10, 1), Company.ELECTRICITY, 75.00, true));
-        dummyBills.add(new Bill(new Date(2022, 10, 15), Company.WATER, 150.00, true));
-        dummyBills.add(new Bill(new Date(2022, 11, 1), Company.GAZ, 100.00, true));
-        dummyBills.add(new Bill(new Date(2022, 11, 15), Company.ELECTRICITY, 250.00, true));
+        dummyBills.add(new Bill(new Date(122, 7, 1), Company.ELECTRICITY, 100.00, true));
+        dummyBills.add(new Bill(new Date(122, 7, 15), Company.WATER, 250.00, true));
+        dummyBills.add(new Bill(new Date(122, 8, 1), Company.GAZ, 75.00, true));
+        dummyBills.add(new Bill(new Date(122, 8, 15), Company.ELECTRICITY, 125.00, true));
+        dummyBills.add(new Bill(new Date(122, 9, 1), Company.WATER, 50.00, true));
+        dummyBills.add(new Bill(new Date(122, 9, 15), Company.GAZ, 200.00, true));
+        dummyBills.add(new Bill(new Date(122, 10, 1), Company.ELECTRICITY, 75.00, true));
+        dummyBills.add(new Bill(new Date(122, 10, 15), Company.WATER, 150.00, true));
+        dummyBills.add(new Bill(new Date(122, 11, 1), Company.GAZ, 100.00, true));
+        dummyBills.add(new Bill(new Date(122, 11, 15), Company.ELECTRICITY, 250.00, true));
 
         // Add unpaid bills
-        dummyBills.add(new Bill(new Date(2022, 7, 1), Company.WATER, 100.00, false));
-        dummyBills.add(new Bill(new Date(2022, 8, 15), Company.GAZ, 250.00, false));
-        dummyBills.add(new Bill(new Date(2022, 9, 1), Company.ELECTRICITY, 75.00, false));
-        dummyBills.add(new Bill(new Date(2022, 10, 15), Company.WATER, 125.00, false));
+        dummyBills.add(new Bill(new Date(122, 7, 1), Company.WATER, 100.00, false));
+        dummyBills.add(new Bill(new Date(122, 8, 15), Company.GAZ, 250.00, false));
+        dummyBills.add(new Bill(new Date(122, 9, 1), Company.ELECTRICITY, 75.00, false));
+        dummyBills.add(new Bill(new Date(122, 10, 15), Company.WATER, 125.00, false));
     }
 
     /**
