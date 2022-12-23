@@ -68,6 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         loginResultText = findViewById(R.id.loginResultText);
 
+        putDummyLoginUser();
+    }
+    private void putDummyLoginUser(){
+        editTextUName.setText("aws.ayyash");
+        editTextPassword.setText("123456789");
     }
 
     private void checkUserByUName(String uName, String password) {

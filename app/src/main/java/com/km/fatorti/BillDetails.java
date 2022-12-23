@@ -1,7 +1,9 @@
 package com.km.fatorti;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +32,14 @@ public class BillDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_details);
 
-        // dummy bill, i should get it from the intent!
-        bill = new Bill(1, new Date(122, 7, 1),null, Company.ELECTRICITY,50,false,
-                new User("admin","admin","admin@exp.com","admin","123456789"));
+
+        Intent intent = getIntent();
+        if (intent != null)
+            bill = intent.getParcelableExtra("bill");
+        else
+            // dummy bill, i should get it from the intent!
+            bill = new Bill(1, new Date(122, 7, 1), null, Company.ELECTRICITY, 50, false,
+                    new User("admin", "admin", "admin@exp.com", "admin", "123456789"));
 
         setTitle("Bill '#" + bill.getId() + "' Details");
 
@@ -61,12 +68,12 @@ public class BillDetails extends AppCompatActivity {
         detailsText = findViewById(R.id.textViewDetails);
     }
 
-    public String formatDetails(Bill bill) {
+    public String formatDetails(@NonNull Bill bill) {
 
         String details = "Bill serial# = " + bill.getId() + ",\nDate Of Issue = " + Bill.dateFormat.format(bill.getDateOfIssue());
         String paidStr = "";
 
-        if (bill.getPaid()) // it should be: isPaid(); !!!
+        if (bill.getPaid() && bill.getDateOfPayment() != null) // it should be: isPaid(); !!!
             paidStr = ",\nDate Of Payment = " + Bill.dateFormat.format(bill.getDateOfPayment());
         else
             paidStr = ",\nDate Of Payment = NOT PAID!";
