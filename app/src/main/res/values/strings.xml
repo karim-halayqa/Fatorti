@@ -4,4 +4,9 @@
     <string name="contactSendBtn">send</string>
     <string name="contactSubjectHint">Enter mail subject</string>
     <string name="contactSubjectTxt">Subject</string>
+    <string name="not_registered_yet">Not registered yet?</string>
+    <string name="register">Register</string>
+    <string name="password">password</string>
+    <string name="user_name">User Name</string>
+    <string name="login">Login</string>
 </resources>
