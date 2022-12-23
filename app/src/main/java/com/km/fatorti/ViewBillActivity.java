@@ -120,9 +120,14 @@ public class ViewBillActivity extends AppCompatActivity {
             }
         });
 
-        billList.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
-            startActivity(intent);
+        billList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bill selectedBill = (Bill) parent.getItemAtPosition(position);
+                Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
+                intent.putExtra("bill", selectedBill);
+                startActivity(intent);
+            }
         });
 
     }
