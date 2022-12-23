@@ -12,6 +12,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Zaid Khamis
+ * */
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
     private TextView txtLogo;
