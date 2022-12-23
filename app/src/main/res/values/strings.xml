@@ -9,4 +9,5 @@
     <string name="password">password</string>
     <string name="user_name">User Name</string>
     <string name="login">Login</string>
+    <string name="splashImgDescription">app logo</string>
 </resources>
