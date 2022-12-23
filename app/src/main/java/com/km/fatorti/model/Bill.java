@@ -24,6 +24,7 @@ public class Bill implements Parcelable {
 
     private User receiver;
 
+
     protected Bill(Parcel in) {
         id = in.readInt();
         value = in.readDouble();
@@ -75,13 +76,6 @@ public class Bill implements Parcelable {
         this.value = value;
         this.paid = paid;
         this.receiver = receiver;
-    }
-
-    public Bill(Date date, Company company, double value, Boolean paid) {
-        this.dateOfIssue = date;
-        this.company = company;
-        this.value = value;
-        this.paid = paid;
     }
 
     public Boolean getPaid() {
