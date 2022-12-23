@@ -119,7 +119,8 @@ public class ViewBillActivity extends AppCompatActivity {
                 fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
             }
         });
-        billList.setOnClickListener(view -> {
+
+        billList.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
             startActivity(intent);
         });
