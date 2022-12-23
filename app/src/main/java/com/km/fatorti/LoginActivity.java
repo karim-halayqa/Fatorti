@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int reqCode = 1;
 
     // in case of first time, will create new object, else, will check the sharedPref storage saved previously
-    private UserService userServiceDA ;
+    private UserService userServiceDA;
 
 
     @Override
@@ -106,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToMainPage() {
-
-        // here we set up the intent to go to the main page, after a valid login
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 
