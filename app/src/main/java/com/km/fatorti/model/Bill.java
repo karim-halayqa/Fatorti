@@ -1,5 +1,11 @@
 package com.km.fatorti.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +14,7 @@ import java.util.Date;
  * used to store bill information, including dateOfIssue, company, its value and if it's paid or not
  * @author Karim Halayqa
  */
-public class Bill {
+public class Bill implements Parcelable {
     private int id; // serial number
     private Date dateOfIssue;
     private Date dateOfPayment;
@@ -17,6 +23,25 @@ public class Bill {
     private Boolean paid;
 
     private User receiver;
+
+    protected Bill(Parcel in) {
+        id = in.readInt();
+        value = in.readDouble();
+        byte tmpPaid = in.readByte();
+        paid = tmpPaid == 0 ? null : tmpPaid == 1;
+    }
+
+    public static final Creator<Bill> CREATOR = new Creator<Bill>() {
+        @Override
+        public Bill createFromParcel(Parcel in) {
+            return new Bill(in);
+        }
+
+        @Override
+        public Bill[] newArray(int size) {
+            return new Bill[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -98,4 +123,15 @@ public class Bill {
         return dateFormat.format(dateOfIssue)+"     "+company.toString()+"     "+value;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeDouble(value);
+        parcel.writeByte((byte) (paid == null ? 0 : paid ? 1 : 2));
+    }
 }

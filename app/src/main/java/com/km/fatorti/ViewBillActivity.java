@@ -1,6 +1,10 @@
 package com.km.fatorti;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,11 +50,12 @@ public class ViewBillActivity extends AppCompatActivity {
         companiesSelected = new ArrayList<>();
         billList = findViewById(R.id.billList);
 
-
         BillService billService = new BillServiceImplementation();
+
         paid.setOnClickListener(view -> {
             paidStatus = true;
             fillBillListByPaid(billService, true);
+
         });
 
         unpaid.setOnClickListener(view -> {
@@ -70,6 +75,8 @@ public class ViewBillActivity extends AppCompatActivity {
                     companiesSelected.clear();
                 }
                 fillBillListByPaid(billService, paidStatus);
+                Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
+                startActivity(intent);
             }
         });
 
@@ -112,22 +119,45 @@ public class ViewBillActivity extends AppCompatActivity {
                 fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
             }
         });
+        billList.setOnClickListener(view -> {
+            Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
+            startActivity(intent);
+        });
 
     }
 
+    /**
+     * filters the displayed Bill list by its paid status
+     *
+     * @param billService
+     * @param paid
+     */
     private void fillBillListByPaid(BillService billService, Boolean paid) {
+        //finds bills by provided paid flag
         List<Bill> bills = billService.findBillsByPaid(paid);
+        //sort the list by dates in a descending order
         bills = bills.stream().sorted((b1, b2) -> b2.getDateOfIssue().compareTo(b1.getDateOfIssue()))
                 .collect(Collectors.toList());
+        //create an ArrayAdapter for the list view to use
         ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);
     }
 
+    /**
+     * filters the displayed Bill list by its paid status and list of companies provided
+     *
+     * @param billService
+     * @param paid
+     * @param company
+     */
     private void fillBillListByPaidAndCompany(BillService billService, Boolean paid, List<Company> company) {
+        //finds bills by provided paid flag and list of companies
         List<Bill> bills = billService.findBillsByPaidAndCompany(paid, company);
+        //sort the list by dates in a descending order
         bills = bills.stream().sorted((b1, b2) -> b2.getDateOfIssue().compareTo(b1.getDateOfIssue()))
                 .collect(Collectors.toList());
+        //create an ArrayAdapter for the list view to use
         ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);
