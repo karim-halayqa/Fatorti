@@ -16,6 +16,7 @@ import com.km.fatorti.model.Company;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewBillActivity extends AppCompatActivity {
 
@@ -116,6 +117,8 @@ public class ViewBillActivity extends AppCompatActivity {
 
     private void fillBillListByPaid(BillService billService, Boolean paid) {
         List<Bill> bills = billService.findBillsByPaid(paid);
+        bills = bills.stream().sorted((b1, b2) -> b2.getDate().compareTo(b1.getDate()))
+                .collect(Collectors.toList());
         ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);
@@ -123,6 +126,8 @@ public class ViewBillActivity extends AppCompatActivity {
 
     private void fillBillListByPaidAndCompany(BillService billService, Boolean paid, List<Company> company) {
         List<Bill> bills = billService.findBillsByPaidAndCompany(paid, company);
+        bills = bills.stream().sorted((b1, b2) -> b2.getDate().compareTo(b1.getDate()))
+                .collect(Collectors.toList());
         ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);

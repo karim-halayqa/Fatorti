@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mailSubjects">
+        <item>Complaint</item>
+        <item>Bug Report</item>
+        <item>App feedback</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

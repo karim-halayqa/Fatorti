@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Fatorti</string>
+    <string name="contactMsgHint">Message ...</string>
+    <string name="contactSendBtn">send</string>
+    <string name="contactSubjectHint">Enter mail subject</string>
+    <string name="contactSubjectTxt">Subject</string>
 </resources>
