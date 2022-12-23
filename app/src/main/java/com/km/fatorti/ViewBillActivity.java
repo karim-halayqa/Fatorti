@@ -75,8 +75,6 @@ public class ViewBillActivity extends AppCompatActivity {
                     companiesSelected.clear();
                 }
                 fillBillListByPaid(billService, paidStatus);
-                Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
-                startActivity(intent);
             }
         });
 
