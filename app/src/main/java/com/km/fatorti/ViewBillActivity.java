@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.km.fatorti.interfaces.BillService;
 import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.model.Bill;
@@ -121,9 +122,13 @@ public class ViewBillActivity extends AppCompatActivity {
         billList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Bill selectedBill = (Bill) parent.getItemAtPosition(position);
                 Intent intent = new Intent(ViewBillActivity.this, BillDetails.class);
-                intent.putExtra("bill", selectedBill);
+
+                Gson gson = new Gson();
+                String billObjectStringJson = gson.toJson(selectedBill);
+                intent.putExtra("billObj", billObjectStringJson);
                 startActivity(intent);
             }
         });

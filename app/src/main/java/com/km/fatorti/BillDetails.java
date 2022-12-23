@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
 import com.km.fatorti.model.User;
@@ -34,8 +35,11 @@ public class BillDetails extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        if (intent != null)
-            bill = intent.getParcelableExtra("bill");
+        if (intent != null) {
+            String strObj = intent.getStringExtra("billObj");
+            Gson gson = new Gson();
+            bill = gson.fromJson(strObj, Bill.class);
+        }
         else
             // dummy bill, i should get it from the intent!
             bill = new Bill(1, new Date(122, 7, 1), null, Company.ELECTRICITY, 50, false,
