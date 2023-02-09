@@ -10,6 +10,10 @@ import java.util.List;
  * @author Karim Halayqa
  */
 public interface BillService {
+
+    List<Bill> findAll();
+    void save(Bill bill);
+    void saveAll(List<Bill> bills);
     List<Bill> findBillsByPaid(Boolean paid);
     List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company);
 }

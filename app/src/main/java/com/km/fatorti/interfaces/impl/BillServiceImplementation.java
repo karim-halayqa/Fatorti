@@ -1,5 +1,14 @@
 package com.km.fatorti.interfaces.impl;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.km.fatorti.interfaces.BillService;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
@@ -14,47 +23,50 @@ import java.util.List;
  * @author Karim Halayqa
  */
 public class BillServiceImplementation implements BillService {
-    private List<Bill> dummyBills;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final String collectionName = "Bill";
 
     /**
      * adds dummy data to the dummyBill list
      */
     public BillServiceImplementation() {
-        dummyBills = new ArrayList<>();
-        // Add paid bills
 
+    }
 
-        dummyBills.add(new Bill(1,new Date(122, 7, 1), new Date(), Company.ELECTRICITY, 100.00, true,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(2, new Date(122, 7, 15), new Date(),
-                Company.WATER, 250.00, true,new User("admin","admin")));
+    @Override
+    public List<Bill> findAll() {
+        List<Bill> billsList = new ArrayList<>();
+        db.collection(collectionName)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Bill bill = documentSnapshot.toObject(Bill.class);
+                            billsList.add(bill);
+                        }
+                    }
 
-        dummyBills.add(new Bill(3, new Date(122, 8, 1),new Date(), Company.GAZ, 75.00, true,
-        new User("admin","admin")));
-        dummyBills.add(new Bill(4,new Date(122, 8, 15),new Date(), Company.ELECTRICITY, 125.00, true,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(5,new Date(122, 9, 1),new Date(), Company.WATER, 50.00, true,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(6,new Date(122, 9, 15),new Date(122,9,17), Company.GAZ, 200.00, true,
-        new User("admin","admin")));
-        dummyBills.add(new Bill(7,new Date(122, 10, 1),new Date(), Company.ELECTRICITY, 75.00, true
-        ,new User("admin","admin")));
-        dummyBills.add(new Bill(8,new Date(122, 10, 15),new Date(122,10,19), Company.WATER, 150.00,
-                true, new User("admin","admin")));
-        dummyBills.add(new Bill(9,new Date(122, 11, 1),new Date(), Company.GAZ, 100.00, true,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(10,new Date(122, 11, 15),new Date(122,11,20),
-                Company.ELECTRICITY, 250.00, true, new User("admin","admin")));
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("getAllBills", "Error getting documents: ", e);
+                    }
+                });
+        return billsList;
+    }
 
-        // Add unpaid bills
-        dummyBills.add(new Bill(11,new Date(122, 7, 1),null, Company.WATER, 100.00, false,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(12,new Date(122, 8, 15), null,Company.GAZ, 250.00, false
-        ,new User("admin","admin")));
-        dummyBills.add(new Bill(13,new Date(122, 9, 1),null, Company.ELECTRICITY, 75.00, false,
-                new User("admin","admin")));
-        dummyBills.add(new Bill(14,new Date(122, 10, 15),null, Company.WATER, 125.00, false
-        ,new User("admin","admin")));
+    @Override
+    public void save(Bill bill) {
+        db.collection(collectionName).add(bill);
+    }
+
+    @Override
+    public void saveAll(List<Bill> bills) {
+        for(Bill bill: bills) {
+            db.collection(collectionName).add(bill);
+        }
     }
 
     /**
@@ -64,9 +76,9 @@ public class BillServiceImplementation implements BillService {
      */
     @Override
     public List<Bill> findBillsByPaid(Boolean paid) {
+        List<Bill> bills = findAll();
         List<Bill> result = new ArrayList<>();
-
-        for(Bill bill : dummyBills){
+        for(Bill bill : bills){
             if(bill.getPaid().equals(paid)){
                 result.add(bill);
             }
@@ -79,9 +91,10 @@ public class BillServiceImplementation implements BillService {
         if(company.isEmpty()) {
             return findBillsByPaid(paid);
         }
+        List<Bill> bills = findAll();
         List<Bill> result = new ArrayList<>();
 
-        for(Bill bill : dummyBills){
+        for(Bill bill : bills){
             if(bill.getPaid().equals(paid) && company.contains(bill.getCompany())){
                 result.add(bill);
             }

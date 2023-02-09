@@ -24,6 +24,8 @@ public class Bill implements Parcelable {
 
     private User receiver;
 
+    public Bill() {
+    }
 
     protected Bill(Parcel in) {
         id = in.readInt();
