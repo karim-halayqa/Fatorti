@@ -130,4 +130,20 @@ public class Bill implements Parcelable {
         parcel.writeDouble(value);
         parcel.writeByte((byte) (paid == null ? 0 : paid ? 1 : 2));
     }
+    public String formatDetails() {
+
+        String details = "Bill serial# = " + getId() + ",\nDate Of Issue = " + Bill.dateFormat.format(getDateOfIssue());
+        String paidStr = "";
+
+        if (getPaid() && getDateOfPayment() != null) // it should be: isPaid(); !!!
+            paidStr = ",\nDate Of VisaPayment = " + Bill.dateFormat.format(getDateOfPayment());
+        else
+            paidStr = ",\nDate Of VisaPayment = NOT PAID!";
+
+        details += paidStr;
+
+        details += ",\nCompany = " + getCompany().toString() + ",\nValue = " + getValue();
+
+        return details;
+    }
 }

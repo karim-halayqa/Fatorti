@@ -1,23 +1,30 @@
 package com.km.fatorti.model;
 
 /**
- * used to store Invoices information
+ * used to check visa details and payments
  * @author Aws Ayyash
  */
 
-public class Payment {
+public class VisaPayment {
 
     private String visaNumber;
     private int threeNumbers;
     private String fullName;
 
-    public Payment(String visaNumber, int threeNumbers, String fullName) {
+    public VisaPayment(String visaNumber, int threeNumbers, String fullName) {
         this.visaNumber = visaNumber;
         this.threeNumbers = threeNumbers;
         this.fullName = fullName;
+
     }
 
-    private boolean isValidVisa(){
+    public boolean isValidVisa(){
+        return isValidVisaNumber() && isValidThreeNums() && isValidThreeFullName();
+    }
+
+
+
+    private boolean isValidVisaNumber(){
 
         return visaNumber.matches("d{16}");
 
@@ -26,7 +33,7 @@ public class Payment {
         return String.valueOf(threeNumbers).matches("d{3}");
     }
     private boolean isValidThreeFullName(){
-        return fullName.matches("d{3}");
+        return fullName.matches("[A-Za-z]+");
     }
     public String getVisaNumber() {
         return visaNumber;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
+import com.km.fatorti.model.Invoice;
 import com.km.fatorti.model.User;
 
 import java.util.Date;
@@ -39,8 +40,7 @@ public class BillDetails extends AppCompatActivity {
             String strObj = intent.getStringExtra("billObj");
             Gson gson = new Gson();
             bill = gson.fromJson(strObj, Bill.class);
-        }
-        else
+        } else
             // dummy bill, i should get it from the intent!
             bill = new Bill(1, new Date(122, 7, 1), null, Company.ELECTRICITY, 50, false,
                     new User("admin", "admin", "admin@exp.com", "admin", "123456789"));
@@ -55,15 +55,32 @@ public class BillDetails extends AppCompatActivity {
         else
             payButton.setVisibility(View.VISIBLE);
 
-        payButton.setOnClickListener(view -> {
+       /* payButton.setOnClickListener(view -> {
 
             // go to payment page, using intents,
+        });*/
+
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // i should pay it here, then show him the invoice.
+                //int billId = bill.getId();
+                //Invoice invoice = new Invoice(bill.hashCode(),billId); // I am using the bill hashcode as an id for the invoice!!!
+
+                Intent intentPay  = new Intent(BillDetails.this, PayActivity.class);
+
+                Gson gson = new Gson();
+                String billObjectStringJson = gson.toJson(bill);
+                intentPay.putExtra("billObj", billObjectStringJson);
+                startActivity(intentPay);
+            }
         });
     }
 
+
     private void putDetailsData(Bill bill) {
 
-        String detailsTxt = formatDetails(bill);
+        String detailsTxt = bill.formatDetails();//formatDetails(bill);
         detailsText.setText(detailsTxt);
     }
 
@@ -78,9 +95,9 @@ public class BillDetails extends AppCompatActivity {
         String paidStr = "";
 
         if (bill.getPaid() && bill.getDateOfPayment() != null) // it should be: isPaid(); !!!
-            paidStr = ",\nDate Of Payment = " + Bill.dateFormat.format(bill.getDateOfPayment());
+            paidStr = ",\nDate Of VisaPayment = " + Bill.dateFormat.format(bill.getDateOfPayment());
         else
-            paidStr = ",\nDate Of Payment = NOT PAID!";
+            paidStr = ",\nDate Of VisaPayment = NOT PAID!";
 
         details += paidStr;
 

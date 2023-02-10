@@ -4,6 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Invoice">
+    tools:context=".InvoiceActivity">
 
+    <TextView
+        android:id="@+id/headingTextViewInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="Welcome to Invoice#"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewResultInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="94dp"
+        app:layout_constraintStart_toStartOf="@+id/headingTextViewInvoice"
+        app:layout_constraintTop_toBottomOf="@+id/headingTextViewInvoice" />
 </androidx.constraintlayout.widget.ConstraintLayout>
