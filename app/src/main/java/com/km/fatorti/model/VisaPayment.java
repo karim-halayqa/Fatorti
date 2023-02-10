@@ -19,7 +19,7 @@ public class VisaPayment {
     }
 
     public boolean isValidVisa(){
-        return isValidVisaNumber() && isValidThreeNums() && isValidThreeFullName();
+        return isValidVisaNumber() && isValidThreeNums() && isValidFullName();
     }
 
 
