@@ -1,6 +1,6 @@
 # Fatoorti
 
-Assignment 1 for the Mobile Development Course (COMP438)/ Birzeit University, Fall Semester 2022/2023.
+Assignment 1&2 -Full project- for the Mobile Development Course (COMP438)/ Birzeit University, Fall Semester 2022/2023.
 
 
 ### Developed by:
