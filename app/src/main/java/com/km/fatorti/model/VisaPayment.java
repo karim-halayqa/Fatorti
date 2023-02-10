@@ -32,7 +32,7 @@ public class VisaPayment {
     private boolean isValidThreeNums(){
         return String.valueOf(threeNumbers).matches("d{3}");
     }
-    private boolean isValidThreeFullName(){
+    private boolean isValidFullName(){
         return fullName.matches("[A-Za-z]+");
     }
     public String getVisaNumber() {
