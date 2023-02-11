@@ -23,6 +23,15 @@ public class Bill implements Parcelable {
     private Boolean paid;
 
     private User receiver;
+    private String documentId; // this is by Aws, to keep track of the stored object (as a document) in the firestore
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 
     public Bill() {
     }
@@ -65,6 +74,7 @@ public class Bill implements Parcelable {
     public User getReceiver() {
         return receiver;
     }
+
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
@@ -136,9 +146,9 @@ public class Bill implements Parcelable {
         String paidStr = "";
 
         if (getPaid() && getDateOfPayment() != null) // it should be: isPaid(); !!!
-            paidStr = ",\nDate Of VisaPayment = " + Bill.dateFormat.format(getDateOfPayment());
+            paidStr = ",\nDate Of Payment = " + Bill.dateFormat.format(getDateOfPayment());
         else
-            paidStr = ",\nDate Of VisaPayment = NOT PAID!";
+            paidStr = ",\nDate Of Payment = NOT PAID!";
 
         details += paidStr;
 

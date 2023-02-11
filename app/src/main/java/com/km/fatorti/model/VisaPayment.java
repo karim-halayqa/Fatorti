@@ -18,22 +18,22 @@ public class VisaPayment {
 
     }
 
-    public boolean isValidVisa(){
+   /* public boolean isValidVisa(){
         return isValidVisaNumber() && isValidThreeNums() && isValidFullName();
+    }*/
+
+
+
+    public boolean isValidVisaNumber(){
+
+        return visaNumber.matches("\\d{4} \\d{4} \\d{4} \\d{4}");
+
     }
-
-
-
-    private boolean isValidVisaNumber(){
-
-        return visaNumber.matches("d{16}");
-
+    public boolean isValidThreeNums(){
+        return String.valueOf(threeNumbers).matches("\\d{3}");
     }
-    private boolean isValidThreeNums(){
-        return String.valueOf(threeNumbers).matches("d{3}");
-    }
-    private boolean isValidFullName(){
-        return fullName.matches("[A-Za-z]+");
+    public boolean isValidFullName(){
+        return fullName.matches("[A-Za-z ]+");
     }
     public String getVisaNumber() {
         return visaNumber;

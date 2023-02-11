@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         userServiceDA = setUpUserService();
+        userServiceDA.getAll();
         setTitle("Login");
 
         setUpViews();
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == resultCode) {
 
             userServiceDA = setUpUserService();
+            userServiceDA.getAll();
 
         }
 
@@ -133,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
     // this is like loading the DB
     public UserService setUpUserService() {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());  //Activity1.class
+        /*SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());  //Activity1.class
 
 
         String strObj = prefs.getString(RegisterActivity.DATAKEYJSON, "");
@@ -145,6 +147,12 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             userServiceDA = new UserServiceDA();
         }
+*/
+        // --------12 feb 2023------
+
+        userServiceDA = new UserServiceDA();
+
+        //
         return userServiceDA;
     }
 }

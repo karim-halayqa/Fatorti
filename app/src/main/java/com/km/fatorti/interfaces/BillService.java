@@ -18,4 +18,7 @@ public interface BillService {
     void saveAll(List<Bill> bills);
     List<Bill> findBillsByPaid(Boolean paid) throws InterruptedException;
     List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company) throws InterruptedException;
+
+    Bill getBillByID(int billId);
+    void updateAndSetPaidWithDate(Bill bill);
 }

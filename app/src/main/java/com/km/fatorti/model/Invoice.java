@@ -26,6 +26,15 @@ public class Invoice {
 
     }
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+    private String documentId;
 
 
     public int getId() {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.km.fatorti.interfaces.InvoiceService;
+import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.interfaces.impl.InvoiceServiceDA;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Invoice;
@@ -25,6 +26,7 @@ public class InvoiceActivity extends AppCompatActivity {
     private TextView textViewResultInvoice;
     private TextView headingTextViewInvoice;
     private Invoice invoice;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,30 +35,44 @@ public class InvoiceActivity extends AppCompatActivity {
 
         setUpViews();
 
-        invoice = catchIntent();
-        putDetailsData();
-        saveInvoice(invoice);
+        // setting up the invoice object (getting it from the intent)
+        if (catchIntent()) {
+            putDetailsData();
+
+
+        }else {
+            finish();
+        }
+
 
     }
 
-    private void saveInvoice(Invoice invoice) {
 
-        InvoiceService invoiceService = new InvoiceServiceDA();
-        invoiceService.save(invoice);
+    private boolean catchIntent() {
+
+        intent = getIntent();
+        if (intent != null) {
+
+
+            String strInvoiceObj = intent.getStringExtra("invoiceObj");
+            String billObjectStrJson = intent.getStringExtra("billObj");
+            Gson gson = new Gson();
+            invoice = gson.fromJson(strInvoiceObj, Invoice.class);
+
+            bill = gson.fromJson(billObjectStrJson,Bill.class);//getBill(invoice.getBillId());
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
-    private Invoice catchIntent() {
-        Intent intent = getIntent();
+   /* private Bill getBill(int billId) {
 
-        String strBillObj = intent.getStringExtra("billObj");
-        Gson gson = new Gson();
-        bill = gson.fromJson(strBillObj, Bill.class);
-        int invoiceIdBillHashcode = bill.hashCode();
-        int billId = bill.getId();
-        Invoice invoice = new Invoice(invoiceIdBillHashcode, billId); // I am using the bill hashcode as an id for the invoice!!!
-
-        return invoice;
-    }
+        BillServiceImplementation billServiceImplementation = new BillServiceImplementation();
+        return billServiceImplementation.getBillByID(billId);
+    }*/
 
     private void setUpViews() {
         textViewResultInvoice = findViewById(R.id.textViewResultInvoice);
@@ -65,7 +81,7 @@ public class InvoiceActivity extends AppCompatActivity {
 
     private void putDetailsData() {
 
-        headingTextViewInvoice.setText(headingTextViewInvoice.getText().toString() + invoice.getId());
+        headingTextViewInvoice.setText("Welcome to Invoice#" + invoice.getId());
 
         String detailsTxt = bill.formatDetails();//formatDetails(bill);
         textViewResultInvoice.setText(detailsTxt);

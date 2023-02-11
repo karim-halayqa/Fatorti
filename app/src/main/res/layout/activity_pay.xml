@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="174dp"
         android:layout_marginTop="85dp"
-        android:text="Pay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,6 +64,9 @@
         android:id="@+id/textViewCheckPay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="514dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        android:textColor="#F30707"
+        app:layout_constraintStart_toStartOf="@+id/buttonPayActivity"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPayActivity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

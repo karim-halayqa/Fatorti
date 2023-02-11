@@ -13,6 +13,15 @@ public class User {
     private String userName;
     private String password;
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+    private String documentId;
     public User() {
     }
 

@@ -73,6 +73,7 @@ public class BillDetails extends AppCompatActivity {
                 String billObjectStringJson = gson.toJson(bill);
                 intentPay.putExtra("billObj", billObjectStringJson);
                 startActivity(intentPay);
+                finish();
             }
         });
     }
@@ -95,9 +96,9 @@ public class BillDetails extends AppCompatActivity {
         String paidStr = "";
 
         if (bill.getPaid() && bill.getDateOfPayment() != null) // it should be: isPaid(); !!!
-            paidStr = ",\nDate Of VisaPayment = " + Bill.dateFormat.format(bill.getDateOfPayment());
+            paidStr = ",\nDate Of Payment = " + Bill.dateFormat.format(bill.getDateOfPayment());
         else
-            paidStr = ",\nDate Of VisaPayment = NOT PAID!";
+            paidStr = ",\nDate Of Payment = NOT PAID!";
 
         details += paidStr;
 

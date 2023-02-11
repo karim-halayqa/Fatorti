@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // saving the db object -UserServiceDA-
 
-                saveToPersistentStorageSharedPreference();
+                //saveToPersistentStorageSharedPreference();
             }
 
 
@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         return "Please fill in the input!";
     }
 
-    private void saveToPersistentStorageSharedPreference() {
+    /*private void saveToPersistentStorageSharedPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         editor.putString(DATAKEYJSON, dbObjectStringJson);
         editor.commit(); // we can user apply(), to handle it in the background, instead of "commit" which writes to the persistent storage immediately
 
-    }
+    }*/
 
     private void setUpViews() {
 
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // setting up userServiceDA
     public UserService getStoredSharedPrefUserService() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+       /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
         Gson gson = new Gson();
 
         String strObj = prefs.getString(RegisterActivity.DATAKEYJSON, "");
@@ -166,6 +166,12 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             userService = new UserServiceDA();
         }
+        */
+        ///------12 feb 2023 load and save to a firebase---
+
+        userService = new UserServiceDA();
+
+        /////-------
         return userService;
     }
 

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -19,6 +20,7 @@ import java.util.List;
 
 /**
  * used to store Invoices information
+ *
  * @author Aws Ayyash
  */
 public class InvoiceServiceDA implements InvoiceService {
@@ -48,7 +50,7 @@ public class InvoiceServiceDA implements InvoiceService {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                            Log.e("getAllInvoices", "Error getting documents: ", e);
+                        Log.e("getAllInvoices", "Error getting documents: ", e);
 
                     }
                 });
@@ -59,15 +61,35 @@ public class InvoiceServiceDA implements InvoiceService {
     public void save(Invoice invoice) {
 
         db.collection(collectionName)
-                .add(invoice);
+                .add(invoice).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String id = documentReference.getId();
+
+                        db.collection(collectionName).document(id).update("documentId", id);
+                        invoice.setDocumentId(id);
+
+                    }
+                });
+
+
     }
 
     @Override
     public void saveAll(List<Invoice> invoices) {
 
-        for (Invoice invoice: invoices) {
+        for (Invoice invoice : invoices) {
             db.collection(collectionName)
-                    .add(invoice);
+                    .add(invoice)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            String id = documentReference.getId();
+
+                            db.collection(collectionName).document(id).update("documentId", id);
+                            invoice.setDocumentId(id);
+                        }
+                    });
         }
 
 
