@@ -1,11 +1,16 @@
 package com.km.fatorti.interfaces.impl;
 
+import static android.content.ContentValues.TAG;
+
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,37 +29,46 @@ import java.util.List;
  */
 public class BillServiceImplementation implements BillService {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
     final String collectionName = "Bill";
+    public List<Bill> bills = new ArrayList<>();
 
     /**
      * adds dummy data to the dummyBill list
      */
     public BillServiceImplementation() {
-
+        db =  FirebaseFirestore.getInstance();
+        findAll();
     }
 
     @Override
-    public List<Bill> findAll() {
-        List<Bill> billsList = new ArrayList<>();
-        db.collection(collectionName)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Bill bill = documentSnapshot.toObject(Bill.class);
-                            billsList.add(bill);
-                        }
-                    }
+    public void findAll() {
 
-                }).addOnFailureListener(new OnFailureListener() {
+        db.collection("Bill")
+                .get()
+                .addOnSuccessListener( new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot documentSnapshots) {
+                            if (documentSnapshots.isEmpty()) {
+                                Log.d(TAG, "onSuccess: LIST EMPTY");
+                            } else {
+                                // Convert the whole Query Snapshot to a list
+                                // of objects directly! No need to fetch each
+                                // document.
+                                bills.addAll(documentSnapshots.toObjects(Bill.class));
+
+                                Log.d(TAG, "onSuccess: " + bills);
+                            }
+                        }
+                })
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("getAllBills", "Error getting documents: ", e);
+                        Log.d(TAG, "onFailure: FAILED");
                     }
                 });
-        return billsList;
+        Log.d(TAG,"bill list size is: "+bills.size());
+//        Thread.sleep(10000);
     }
 
     @Override
@@ -75,8 +89,7 @@ public class BillServiceImplementation implements BillService {
      * @return
      */
     @Override
-    public List<Bill> findBillsByPaid(Boolean paid) {
-        List<Bill> bills = findAll();
+    public List<Bill> findBillsByPaid(Boolean paid) throws InterruptedException {
         List<Bill> result = new ArrayList<>();
         for(Bill bill : bills){
             if(bill.getPaid().equals(paid)){
@@ -87,11 +100,10 @@ public class BillServiceImplementation implements BillService {
     }
 
     @Override
-    public List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company) {
+    public List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company) throws InterruptedException {
         if(company.isEmpty()) {
             return findBillsByPaid(paid);
         }
-        List<Bill> bills = findAll();
         List<Bill> result = new ArrayList<>();
 
         for(Bill bill : bills){

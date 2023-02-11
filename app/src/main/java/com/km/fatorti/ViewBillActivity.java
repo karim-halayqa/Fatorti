@@ -3,6 +3,7 @@ package com.km.fatorti;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,6 +36,7 @@ public class ViewBillActivity extends AppCompatActivity {
     private ListView billList;
 
     private List<Company> companiesSelected;
+    private BillServiceImplementation billService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +53,26 @@ public class ViewBillActivity extends AppCompatActivity {
         companiesSelected = new ArrayList<>();
         billList = findViewById(R.id.billList);
 
-        BillService billService = new BillServiceImplementation();
+        billService = new BillServiceImplementation();
 
         paid.setOnClickListener(view -> {
             paidStatus = true;
-            fillBillListByPaid(billService, true);
+            try {
+                fillBillListByPaid(billService, true);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         });
 
         unpaid.setOnClickListener(view -> {
             paidStatus = false;
-            fillBillListByPaid(billService, false);
+            try {
+                fillBillListByPaid(billService, false);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
-
-        paid.performClick();
 
         all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,7 +83,11 @@ public class ViewBillActivity extends AppCompatActivity {
                     gaz.setChecked(false);
                     companiesSelected.clear();
                 }
-                fillBillListByPaid(billService, paidStatus);
+                try {
+                    fillBillListByPaid(billService, paidStatus);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -88,7 +100,11 @@ public class ViewBillActivity extends AppCompatActivity {
                 } else {
                     companiesSelected.remove(Company.ELECTRICITY);
                 }
-                fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                try {
+                    fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -102,7 +118,11 @@ public class ViewBillActivity extends AppCompatActivity {
                 } else {
                     companiesSelected.remove(Company.WATER);
                 }
-                fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                try {
+                    fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -115,7 +135,11 @@ public class ViewBillActivity extends AppCompatActivity {
                 } else {
                     companiesSelected.remove(Company.GAZ);
                 }
-                fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                try {
+                    fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -135,13 +159,18 @@ public class ViewBillActivity extends AppCompatActivity {
 
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//    }
+
     /**
      * filters the displayed Bill list by its paid status
      *
      * @param billService
      * @param paid
      */
-    private void fillBillListByPaid(BillService billService, Boolean paid) {
+    private void fillBillListByPaid(BillService billService, Boolean paid) throws InterruptedException {
         //finds bills by provided paid flag
         List<Bill> bills = billService.findBillsByPaid(paid);
         //sort the list by dates in a descending order
@@ -160,7 +189,7 @@ public class ViewBillActivity extends AppCompatActivity {
      * @param paid
      * @param company
      */
-    private void fillBillListByPaidAndCompany(BillService billService, Boolean paid, List<Company> company) {
+    private void fillBillListByPaidAndCompany(BillService billService, Boolean paid, List<Company> company) throws InterruptedException {
         //finds bills by provided paid flag and list of companies
         List<Bill> bills = billService.findBillsByPaidAndCompany(paid, company);
         //sort the list by dates in a descending order
