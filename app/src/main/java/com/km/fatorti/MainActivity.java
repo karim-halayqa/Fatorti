@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.km.fatorti.interfaces.BillService;
+import com.km.fatorti.interfaces.impl.BillServiceImplementation;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button payBills;

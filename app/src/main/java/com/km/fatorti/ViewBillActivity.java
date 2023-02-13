@@ -33,7 +33,7 @@ public class ViewBillActivity extends AppCompatActivity {
     private CheckBox electricity;
     private CheckBox water;
     private CheckBox gaz;
-    private ListView billList;
+    private static ListView billList;
 
     private List<Company> companiesSelected;
     private BillServiceImplementation billService;
@@ -82,6 +82,10 @@ public class ViewBillActivity extends AppCompatActivity {
                     water.setChecked(false);
                     gaz.setChecked(false);
                     companiesSelected.clear();
+                } else {
+                    if(filtersUnchecked()) {
+                        all.setChecked(true);
+                    }
                 }
                 try {
                     fillBillListByPaid(billService, paidStatus);
@@ -99,6 +103,9 @@ public class ViewBillActivity extends AppCompatActivity {
                     companiesSelected.add(Company.ELECTRICITY);
                 } else {
                     companiesSelected.remove(Company.ELECTRICITY);
+                    if(filtersUnchecked()) {
+                        all.setChecked(true);
+                    }
                 }
                 try {
                     fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
@@ -117,6 +124,9 @@ public class ViewBillActivity extends AppCompatActivity {
                     companiesSelected.add(Company.WATER);
                 } else {
                     companiesSelected.remove(Company.WATER);
+                    if(filtersUnchecked()) {
+                        all.setChecked(true);
+                    }
                 }
                 try {
                     fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
@@ -134,6 +144,9 @@ public class ViewBillActivity extends AppCompatActivity {
                     companiesSelected.add(Company.GAZ);
                 } else {
                     companiesSelected.remove(Company.GAZ);
+                    if(filtersUnchecked()) {
+                        all.setChecked(true);
+                    }
                 }
                 try {
                     fillBillListByPaidAndCompany(billService, paidStatus, companiesSelected);
@@ -156,6 +169,7 @@ public class ViewBillActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        all.setChecked(true);
 
     }
 
@@ -170,14 +184,14 @@ public class ViewBillActivity extends AppCompatActivity {
      * @param billService
      * @param paid
      */
-    private void fillBillListByPaid(BillService billService, Boolean paid) throws InterruptedException {
+    public static void fillBillListByPaid(BillService billService, Boolean paid) throws InterruptedException {
         //finds bills by provided paid flag
         List<Bill> bills = billService.findBillsByPaid(paid);
         //sort the list by dates in a descending order
         bills = bills.stream().sorted((b1, b2) -> b2.getDateOfIssue().compareTo(b1.getDateOfIssue()))
                 .collect(Collectors.toList());
         //create an ArrayAdapter for the list view to use
-        ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
+        ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.billList.getContext(),
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);
     }
@@ -199,5 +213,12 @@ public class ViewBillActivity extends AppCompatActivity {
         ArrayAdapter<Bill> billAdapterItems = new ArrayAdapter<Bill>(ViewBillActivity.this,
                 android.R.layout.simple_list_item_1, bills);
         billList.setAdapter(billAdapterItems);
+    }
+
+    Boolean filtersUnchecked() {
+        if(!electricity.isChecked() && !water.isChecked() && !gaz.isChecked()) {
+            return true;
+        }
+        return false;
     }
 }

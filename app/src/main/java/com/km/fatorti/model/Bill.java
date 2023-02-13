@@ -15,6 +15,7 @@ import java.util.Date;
  * @author Karim Halayqa
  */
 public class Bill implements Parcelable {
+
     private int id; // serial number
     private Date dateOfIssue;
     private Date dateOfPayment;
@@ -126,7 +127,7 @@ public class Bill implements Parcelable {
 
     @Override
     public String toString() {
-        return dateFormat.format(dateOfIssue)+"     "+company.toString()+"     "+value;
+        return dateFormat.format(dateOfIssue)+"     "+company.toString()+"     "+String.format("%.0f",value);
     }
 
     @Override
