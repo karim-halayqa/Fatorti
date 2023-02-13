@@ -24,6 +24,9 @@ public class User {
     private String documentId;
     public User() {
     }
+    public User(String userName) {
+    this.userName = userName;
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;

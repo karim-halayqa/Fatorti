@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.km.fatorti.interfaces.BillService;
 import com.km.fatorti.interfaces.impl.BillServiceImplementation;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+
+
+
         payBills = findViewById(R.id.payBills);
         viewBills = findViewById(R.id.viewBills);
         contactUs = findViewById(R.id.contactUs);
+
 
         payBills.setOnClickListener(view -> {
             Toast.makeText(MainActivity.this,"Coming Soon!", Toast.LENGTH_SHORT).show();

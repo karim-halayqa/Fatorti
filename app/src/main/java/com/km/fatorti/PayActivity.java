@@ -111,7 +111,7 @@ public class PayActivity extends AppCompatActivity {
 
             resultCheckPay.setText("Paid!");
             startActivity(intentInvoice);
-            //finish();
+            finish();
 
 
         } else {
@@ -125,6 +125,7 @@ public class PayActivity extends AppCompatActivity {
         bill.setDateOfPayment(new Date());
 
         BillServiceImplementation billServiceDA = new BillServiceImplementation();
+
         billServiceDA.updateAndSetPaidWithDate(bill);
 
     }

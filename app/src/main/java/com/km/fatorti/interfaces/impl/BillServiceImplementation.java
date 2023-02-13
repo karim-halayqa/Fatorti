@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -110,6 +111,9 @@ public class BillServiceImplementation implements BillService {
                             // document.
                             bills.clear();
                             bills.addAll(documentSnapshots.toObjects(Bill.class));
+
+
+
                             try {
                                 ViewBillActivity.fillBillListByPaid(BillServiceImplementation.this, true);
                             } catch (InterruptedException e) {
@@ -146,6 +150,8 @@ public class BillServiceImplementation implements BillService {
         db.collection(collectionName).document(bill.getDocumentId())
                 .update("paid",true,
                         "dateOfPayment",new Date());
+
+
     }
 
     @Override
@@ -203,6 +209,8 @@ public class BillServiceImplementation implements BillService {
 
 
         findAll();
+        while (bills.isEmpty())
+            continue;
         for (Bill bill : bills) {
             if (bill.getId() == billId)
                 return bill;

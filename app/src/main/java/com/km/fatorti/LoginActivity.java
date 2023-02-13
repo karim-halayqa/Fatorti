@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.km.fatorti.interfaces.UserService;
+import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.interfaces.impl.UserServiceDA;
 import com.km.fatorti.model.User;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Aws Ayyash
@@ -40,6 +43,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        ////////////////Aws////////
+
+        // --------------get the data to clean it
+
+       // BillServiceImplementation billServiceImplementation = new BillServiceImplementation();
+        //billServiceImplementation.findAll();
+
+
+        ////////////////////////
+
+
         userServiceDA = setUpUserService();
         userServiceDA.getAll();
         setTitle("Login");
@@ -58,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivityForResult(intent, reqCode);
         });
+
+
 
     }
 
@@ -92,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
 
                 // go to main page, using intents, valid "login"
-                goToMainPage();
+                goToMainPage(user);
             }
         }
         loginResultText.setText(msgResultLogin);
@@ -112,8 +129,11 @@ public class LoginActivity extends AppCompatActivity {
         return "username= " + uName + " is not registered";
     }
 
-    private void goToMainPage() {
+    private void goToMainPage(User user) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Gson gson = new Gson();
+        String gsonObjUser =  gson.toJson(user);
+        intent.putExtra("gsonObjUser", gsonObjUser);
         startActivity(intent);
     }
 

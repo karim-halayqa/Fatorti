@@ -50,8 +50,10 @@ public class BillDetails extends AppCompatActivity {
         setUpViews();
 
         putDetailsData(bill);
-        if (bill.getPaid())
+        if (bill.getPaid()){
             payButton.setVisibility(View.GONE);
+            // todo i should give the ability to view the invoice
+        }
         else
             payButton.setVisibility(View.VISIBLE);
 
