@@ -13,6 +13,15 @@ public class User {
     private String userName;
     private String password;
 
+    public User(String firstName, String lastName, String email, String userName, String password, String documentId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.documentId = documentId;
+    }
+
     public String getDocumentId() {
         return documentId;
     }

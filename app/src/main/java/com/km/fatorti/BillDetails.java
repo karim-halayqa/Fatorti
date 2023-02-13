@@ -26,6 +26,7 @@ public class BillDetails extends AppCompatActivity {
 
 
     private Button payButton;
+    private Button buttonViewInvoice;
     private TextView detailsText;
     private Bill bill;
 
@@ -53,9 +54,13 @@ public class BillDetails extends AppCompatActivity {
         if (bill.getPaid()){
             payButton.setVisibility(View.GONE);
             // todo i should give the ability to view the invoice
+            buttonViewInvoice.setVisibility(View.VISIBLE);
         }
-        else
+        else{
             payButton.setVisibility(View.VISIBLE);
+
+            buttonViewInvoice.setVisibility(View.GONE);
+        }
 
        /* payButton.setOnClickListener(view -> {
 
@@ -78,6 +83,24 @@ public class BillDetails extends AppCompatActivity {
                 finish();
             }
         });
+
+        buttonViewInvoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentInvoice  = new Intent(BillDetails.this, InvoiceActivity.class);
+
+                Invoice invoice = new Invoice(bill.hashCode(), bill.getId());
+
+                Gson gson = new Gson();
+                String invoiceObjectStringJson = gson.toJson(invoice);
+                String billObjectStrJson = gson.toJson(bill);
+
+                intentInvoice.putExtra("invoiceObj", invoiceObjectStringJson);
+                intentInvoice.putExtra("billObj",billObjectStrJson);
+
+                startActivity(intentInvoice);
+            }
+        });
     }
 
 
@@ -90,6 +113,7 @@ public class BillDetails extends AppCompatActivity {
     private void setUpViews() {
         payButton = findViewById(R.id.payButton);
         detailsText = findViewById(R.id.textViewDetails);
+        buttonViewInvoice = findViewById(R.id.buttonViewInvoice);
     }
 
     public String formatDetails(@NonNull Bill bill) {

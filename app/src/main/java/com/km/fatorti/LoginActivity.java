@@ -17,8 +17,15 @@ import com.google.gson.Gson;
 import com.km.fatorti.interfaces.UserService;
 import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.interfaces.impl.UserServiceDA;
+import com.km.fatorti.model.Bill;
+import com.km.fatorti.model.Company;
 import com.km.fatorti.model.User;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,10 +55,101 @@ public class LoginActivity extends AppCompatActivity {
 
         // --------------get the data to clean it
 
-       // BillServiceImplementation billServiceImplementation = new BillServiceImplementation();
-        //billServiceImplementation.findAll();
+       /* ArrayList<Bill> bills = new ArrayList<>();
+        Random rand = new Random();
+        Calendar calendar = Calendar.getInstance();
+        UserService userService = new UserServiceDA();
+
+        List<User> users = userService.getAll();
+
+        // Generate 25 bills with dummy data
+        for (int i = 1; i <= 25; i++) {
+            int companyNumber = rand.nextInt(3) + 1; // random number between 1 and 3
+            Company company;
+            if (companyNumber == 1) {
+                company = Company.WATER;
+            } else if (companyNumber == 2) {
+                company = Company.GAZ;
+            } else {
+                company = Company.ELECTRICITY;
+            }
+
+            double value = Math.floor(rand.nextDouble() * 1000); // random value between 0 and 100
+
+            calendar.set(Calendar.YEAR, rand.nextInt(2021 - 2020 + 1) + 2020); // random year between 2020 and 2021
+            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
+            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
+            Date dateOfIssue = calendar.getTime();
+
+            calendar.set(Calendar.YEAR, rand.nextInt(2022 - 2021 + 1) + 2021); // random year between 2021 and 2022
+            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
+            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
+            Date dateOfPayment = calendar.getTime();
+
+            Boolean paid;
+            if (i <= 10) {
+                paid = false;
+            } else {
+                paid = true;
+            }
+            int random = (int) (Math.random()*3);
+            Bill bill = new Bill(i, dateOfIssue, dateOfPayment, company, value, paid, users.get(random));
+            bills.add(bill);
+        }
+        BillServiceImplementation bbb = new BillServiceImplementation();
+        bbb.saveAll(bills);
+*/
+
+     /*   ArrayList<Bill> bills = new ArrayList<>();
+        Random rand = new Random();
+        Calendar calendar = Calendar.getInstance();
+        //UserService userService = new UserServiceDA();
+        User karim = new User("Karim", "Halayqa", "karim@gmail.com","karim.halayqa","123456789","2Lf8hLqLOpKsBdY7oCKA");
+        User aws = new User("Aws", "Ayyash", "aws@gmail.com","aws.ayyash","123456789","o2NTPAZCKtv2ZJwrLV8G");
+        User zaid = new User("Zaid", "Khamis", "zaid@gmail.com","zaid.khamis","123456789","IfbMYP1cuMhYWLRTS0e3");
 
 
+        List<User> users = new ArrayList<>();
+        users.add(karim);
+        users.add(aws);
+        users.add(zaid);
+        // Generate 25 bills with dummy data
+        for (int i = 1; i <= 25; i++) {
+            int companyNumber = rand.nextInt(3) + 1; // random number between 1 and 3
+            Company company;
+            if (companyNumber == 1) {
+                company = Company.WATER;
+            } else if (companyNumber == 2) {
+                company = Company.GAZ;
+            } else {
+                company = Company.ELECTRICITY;
+            }
+
+            double value = Math.floor(rand.nextDouble() * 1000); // random value between 0 and 100
+
+            calendar.set(Calendar.YEAR, rand.nextInt(2021 - 2020 + 1) + 2020); // random year between 2020 and 2021
+            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
+            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
+            Date dateOfIssue = calendar.getTime();
+
+            calendar.set(Calendar.YEAR, rand.nextInt(2022 - 2021 + 1) + 2021); // random year between 2021 and 2022
+            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
+            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
+            Date dateOfPayment = calendar.getTime();
+
+            Boolean paid;
+            if (i <= 10) {
+                paid = false;
+            } else {
+                paid = true;
+            }
+            int random = (int) (Math.random()*3);
+            Bill bill = new Bill(i, dateOfIssue, dateOfPayment, company, value, paid, users.get(random));
+            bills.add(bill);
+        }
+        BillServiceImplementation bbb = new BillServiceImplementation();
+        bbb.saveAll(bills);
+*/
         ////////////////////////
 
 

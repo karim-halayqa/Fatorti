@@ -114,12 +114,13 @@ public class BillServiceImplementation implements BillService {
 
 
 
-                            try {
+                          try {
                                 ViewBillActivity.fillBillListByPaid(BillServiceImplementation.this, true);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                             Log.d(TAG, "onSuccess: " + bills);
+
                         }
                     }
                 })
