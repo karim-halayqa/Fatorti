@@ -50,11 +50,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         // Determine which image to display based on the bill attributes
         int imageResource = R.drawable.bill96;
         if (bill.getCompany().equals("GAZ")) {
-            //   imageResource = R.drawable.gaz;
+               imageResource = R.drawable.gaz;
         } else if (bill.getCompany().equals("ELECTRICITY")) {
-            // imageResource = R.drawable.electricity;
+             imageResource = R.drawable.electricity;
         } else if (bill.getCompany().equals("WATER"))
-            //imageResource = R.drawable.water;
+            imageResource = R.drawable.water;
 
             Glide.with(context).load(imageResource).into(imageView);
 
