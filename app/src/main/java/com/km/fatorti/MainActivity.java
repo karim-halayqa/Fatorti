@@ -23,20 +23,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-
-
-
         payBills = findViewById(R.id.payBills);
         viewBills = findViewById(R.id.viewBills);
         contactUs = findViewById(R.id.contactUs);
 
+        Intent userIntent = getIntent();
+        String userJson = userIntent.getStringExtra("gsonObjUser");
 
         payBills.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, PayActivity.class);
+            startActivity(intent);
             Toast.makeText(MainActivity.this,"Coming Soon!", Toast.LENGTH_SHORT).show();
         });
 
         viewBills.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, ViewBillActivity.class);
+            intent.putExtra("user", userJson);
             startActivity(intent);
         });
 

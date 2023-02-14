@@ -1,6 +1,7 @@
 package com.km.fatorti;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.km.fatorti.interfaces.BillService;
 import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
+import com.km.fatorti.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +55,16 @@ public class ViewBillActivity extends AppCompatActivity {
         companiesSelected = new ArrayList<>();
         billList = findViewById(R.id.billList);
 
-        billService = new BillServiceImplementation();
+        Intent intent = getIntent();
+        String userJson = intent.getStringExtra("user");
+        Gson gson = new Gson();
+        User user = gson.fromJson(userJson,User.class);
+        billService = new BillServiceImplementation(user);
 
         paid.setOnClickListener(view -> {
             paidStatus = true;
+            unpaid.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            paid.setBackgroundColor(getResources().getColor(R.color.purple_700));
             try {
                 fillBillListByPaid(billService, true);
             } catch (InterruptedException e) {
@@ -64,9 +72,12 @@ public class ViewBillActivity extends AppCompatActivity {
             }
 
         });
+        paid.performClick();
 
         unpaid.setOnClickListener(view -> {
             paidStatus = false;
+            paid.setBackgroundColor(getResources().getColor(R.color.purple_500));
+            unpaid.setBackgroundColor(getResources().getColor(R.color.purple_700));
             try {
                 fillBillListByPaid(billService, false);
             } catch (InterruptedException e) {

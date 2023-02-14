@@ -2,6 +2,7 @@ package com.km.fatorti.interfaces.impl;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.km.fatorti.ViewBillActivity;
 import com.km.fatorti.interfaces.BillService;
+import com.km.fatorti.interfaces.UserService;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
 import com.km.fatorti.model.User;
@@ -39,66 +41,24 @@ import java.util.stream.Collectors;
  */
 public class BillServiceImplementation implements BillService {
 
-    FirebaseFirestore db;
-    final String collectionName = "Bill";
+    private FirebaseFirestore db;
+    private final String collectionName = "Bill";
     public static List<Bill> bills = new ArrayList<>();
+    private User user;
 
     /**
      * adds dummy data to the dummyBill list
      */
-    public BillServiceImplementation() {
+    public BillServiceImplementation(User user) {
+        this.user = user;
         db = FirebaseFirestore.getInstance();
-//        ArrayList<Bill> bills = new ArrayList<>();
-//        Random rand = new Random();
-//        Calendar calendar = Calendar.getInstance();
-//
-//        User user = new User();
-//        // Generate 25 bills with dummy data
-//        for (int i = 1; i <= 25; i++) {
-//            int companyNumber = rand.nextInt(3) + 1; // random number between 1 and 3
-//            Company company;
-//            if (companyNumber == 1) {
-//                company = Company.WATER;
-//            } else if (companyNumber == 2) {
-//                company = Company.GAZ;
-//            } else {
-//                company = Company.ELECTRICITY;
-//            }
-//
-//            double value = Math.floor(rand.nextDouble() * 1000); // random value between 0 and 100
-//
-//            calendar.set(Calendar.YEAR, rand.nextInt(2021 - 2020 + 1) + 2020); // random year between 2020 and 2021
-//            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
-//            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
-//            Date dateOfIssue = calendar.getTime();
-//
-//            calendar.set(Calendar.YEAR, rand.nextInt(2022 - 2021 + 1) + 2021); // random year between 2021 and 2022
-//            calendar.set(Calendar.MONTH, rand.nextInt(12)); // random month
-//            calendar.set(Calendar.DAY_OF_MONTH, rand.nextInt(31) + 1); // random day of month
-//            Date dateOfPayment = calendar.getTime();
-//
-//            Boolean paid;
-//            if (i <= 10) {
-//                paid = false;
-//            } else {
-//                paid = true;
-//            }
-//
-//            Bill bill = new Bill(i, dateOfIssue, dateOfPayment, company, value, paid, user);
-//            bills.add(bill);
-//        }
-//        for(Bill bill:bills) {
-//            db.collection(collectionName)
-//                    .add(bill);
-//        }
-
         findAll();
     }
 
     @Override
     public void findAll() {
 
-        db.collection("Bill")
+        db.collection("Bill").whereEqualTo("receiver", user)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

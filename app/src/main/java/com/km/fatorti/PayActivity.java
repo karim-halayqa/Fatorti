@@ -16,6 +16,7 @@ import com.km.fatorti.interfaces.impl.BillServiceImplementation;
 import com.km.fatorti.interfaces.impl.InvoiceServiceDA;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Invoice;
+import com.km.fatorti.model.User;
 import com.km.fatorti.model.VisaPayment;
 
 import java.util.Date;
@@ -124,7 +125,12 @@ public class PayActivity extends AppCompatActivity {
         bill.setPaid(true);
         bill.setDateOfPayment(new Date());
 
-        BillServiceImplementation billServiceDA = new BillServiceImplementation();
+        Intent intent = getIntent();
+        String userJson = intent.getStringExtra("user");
+        Gson gson = new Gson();
+        User user = gson.fromJson(userJson,User.class);
+
+        BillServiceImplementation billServiceDA = new BillServiceImplementation(user);
 
         billServiceDA.updateAndSetPaidWithDate(bill);
 
