@@ -1,0 +1,49 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/bill_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <TextView
+            android:id="@+id/company_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Company Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/date_of_issue_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date of Issue"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/value_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Value"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

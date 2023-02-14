@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fatorti">
         <activity
+            android:name=".PayBillsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".PayActivity"
             android:exported="false" />
         <activity

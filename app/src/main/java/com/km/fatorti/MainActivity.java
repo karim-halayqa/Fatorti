@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button payBills;
     private Button viewBills;
     private Button contactUs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
         String userJson = userIntent.getStringExtra("gsonObjUser");
 
         payBills.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PayActivity.class);
+            Intent intent = new Intent(MainActivity.this, PayBillsActivity.class);
             startActivity(intent);
-            Toast.makeText(MainActivity.this,"Coming Soon!", Toast.LENGTH_SHORT).show();
         });
 
         viewBills.setOnClickListener(view -> {
