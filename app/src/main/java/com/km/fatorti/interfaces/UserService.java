@@ -14,4 +14,8 @@ public interface UserService extends Serializable {
 
     User findUser(String userName);
     void addUser(User newUser);
+    void addAll(List<User> users);
+    List<User> getAll();
+
+
 }

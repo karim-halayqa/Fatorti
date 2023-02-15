@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605228416483",
+    "project_id": "fatorti",
+    "storage_bucket": "fatorti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605228416483:android:be6a88e1af2866388e74d6",
+        "android_client_info": {
+          "package_name": "com.km.fatorti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605228416483-cd5c93mprbcnhbia0o3q8vgds2lb9eh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8RQ3HoZlJAGrHTFruOuCxPG4DLfPX3cA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605228416483-cd5c93mprbcnhbia0o3q8vgds2lb9eh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

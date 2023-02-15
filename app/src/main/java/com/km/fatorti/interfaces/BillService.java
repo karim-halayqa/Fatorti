@@ -5,11 +5,20 @@ import com.km.fatorti.model.Company;
 
 import java.util.List;
 
+
 /**
  * used to fetch bill records, initially used to filter dummy bill records by their paid status
  * @author Karim Halayqa
  */
 public interface BillService {
-    List<Bill> findBillsByPaid(Boolean paid);
-    List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company);
+
+//    void fetchData(Callback callback);
+    void findAll();
+    void save(Bill bill);
+    void saveAll(List<Bill> bills);
+    List<Bill> findBillsByPaid(Boolean paid) throws InterruptedException;
+    List<Bill> findBillsByPaidAndCompany(Boolean paid, List<Company> company) throws InterruptedException;
+
+    Bill getBillByID(int billId);
+    void updateAndSetPaidWithDate(Bill bill);
 }

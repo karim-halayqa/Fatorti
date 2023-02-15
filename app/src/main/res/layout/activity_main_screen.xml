@@ -36,6 +36,7 @@
 
         <Button
             android:id="@+id/contactUs"
+            android:drawableLeft="@drawable/contact"
             style="@style/mainScrnBtnStyle"
             android:text="Contact Us" />
 

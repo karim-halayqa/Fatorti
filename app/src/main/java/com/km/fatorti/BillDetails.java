@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.km.fatorti.model.Bill;
 import com.km.fatorti.model.Company;
+import com.km.fatorti.model.Invoice;
 import com.km.fatorti.model.User;
 
 import java.util.Date;
@@ -25,6 +26,7 @@ public class BillDetails extends AppCompatActivity {
 
 
     private Button payButton;
+    private Button buttonViewInvoice;
     private TextView detailsText;
     private Bill bill;
 
@@ -39,8 +41,7 @@ public class BillDetails extends AppCompatActivity {
             String strObj = intent.getStringExtra("billObj");
             Gson gson = new Gson();
             bill = gson.fromJson(strObj, Bill.class);
-        }
-        else
+        } else
             // dummy bill, i should get it from the intent!
             bill = new Bill(1, new Date(122, 7, 1), null, Company.ELECTRICITY, 50, false,
                     new User("admin", "admin", "admin@exp.com", "admin", "123456789"));
@@ -50,26 +51,69 @@ public class BillDetails extends AppCompatActivity {
         setUpViews();
 
         putDetailsData(bill);
-        if (bill.getPaid())
+        if (bill.getPaid()){
             payButton.setVisibility(View.GONE);
-        else
+            // todo i should give the ability to view the invoice
+            buttonViewInvoice.setVisibility(View.VISIBLE);
+        }
+        else{
             payButton.setVisibility(View.VISIBLE);
 
-        payButton.setOnClickListener(view -> {
+            buttonViewInvoice.setVisibility(View.GONE);
+        }
+
+       /* payButton.setOnClickListener(view -> {
 
             // go to payment page, using intents,
+        });*/
+
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // i should pay it here, then show him the invoice.
+                //int billId = bill.getId();
+                //Invoice invoice = new Invoice(bill.hashCode(),billId); // I am using the bill hashcode as an id for the invoice!!!
+
+                Intent intentPay  = new Intent(BillDetails.this, PayActivity.class);
+
+                Gson gson = new Gson();
+                String billObjectStringJson = gson.toJson(bill);
+                intentPay.putExtra("billObj", billObjectStringJson);
+                startActivity(intentPay);
+                finish();
+            }
+        });
+
+        buttonViewInvoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentInvoice  = new Intent(BillDetails.this, InvoiceActivity.class);
+
+                Invoice invoice = new Invoice(bill.hashCode(), bill.getId());
+
+                Gson gson = new Gson();
+                String invoiceObjectStringJson = gson.toJson(invoice);
+                String billObjectStrJson = gson.toJson(bill);
+
+                intentInvoice.putExtra("invoiceObj", invoiceObjectStringJson);
+                intentInvoice.putExtra("billObj",billObjectStrJson);
+
+                startActivity(intentInvoice);
+            }
         });
     }
 
+
     private void putDetailsData(Bill bill) {
 
-        String detailsTxt = formatDetails(bill);
+        String detailsTxt = bill.formatDetails();//formatDetails(bill);
         detailsText.setText(detailsTxt);
     }
 
     private void setUpViews() {
         payButton = findViewById(R.id.payButton);
         detailsText = findViewById(R.id.textViewDetails);
+        buttonViewInvoice = findViewById(R.id.buttonViewInvoice);
     }
 
     public String formatDetails(@NonNull Bill bill) {

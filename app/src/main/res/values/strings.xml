@@ -10,4 +10,6 @@
     <string name="user_name">User Name</string>
     <string name="login">Login</string>
     <string name="splashImgDescription">app logo</string>
+    <string name="errorVisa">Error: Invalid visa!</string>
+    <string name="alreadyPaidBill">Already paid!!!</string>
 </resources>

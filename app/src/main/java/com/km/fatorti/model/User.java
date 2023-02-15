@@ -1,6 +1,8 @@
 package com.km.fatorti.model;
 
 
+import androidx.annotation.Nullable;
+
 /**
  * used to store user information
  * @author Aws Ayyash
@@ -12,6 +14,30 @@ public class User {
     private String email;
     private String userName;
     private String password;
+
+    public User(String firstName, String lastName, String email, String userName, String password, String documentId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.documentId = documentId;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+    private String documentId;
+    public User() {
+    }
+    public User(String userName) {
+    this.userName = userName;
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
@@ -64,5 +90,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return ((User)obj).getUserName() == userName;
     }
 }

@@ -15,6 +15,7 @@ import java.util.Date;
  * @author Karim Halayqa
  */
 public class Bill implements Parcelable {
+
     private int id; // serial number
     private Date dateOfIssue;
     private Date dateOfPayment;
@@ -23,7 +24,18 @@ public class Bill implements Parcelable {
     private Boolean paid;
 
     private User receiver;
+    private String documentId; // this is by Aws, to keep track of the stored object (as a document) in the firestore
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
+    public Bill() {
+    }
 
     protected Bill(Parcel in) {
         id = in.readInt();
@@ -63,6 +75,7 @@ public class Bill implements Parcelable {
     public User getReceiver() {
         return receiver;
     }
+
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
@@ -114,7 +127,7 @@ public class Bill implements Parcelable {
 
     @Override
     public String toString() {
-        return dateFormat.format(dateOfIssue)+"     "+company.toString()+"     "+value;
+        return dateFormat.format(dateOfIssue)+"     "+company.toString()+"     "+String.format("%.0f",value);
     }
 
     @Override
@@ -127,5 +140,21 @@ public class Bill implements Parcelable {
         parcel.writeInt(id);
         parcel.writeDouble(value);
         parcel.writeByte((byte) (paid == null ? 0 : paid ? 1 : 2));
+    }
+    public String formatDetails() {
+
+        String details = "Bill serial# = " + getId() + ",\nDate Of Issue = " + Bill.dateFormat.format(getDateOfIssue());
+        String paidStr = "";
+
+        if (getPaid() && getDateOfPayment() != null) // it should be: isPaid(); !!!
+            paidStr = ",\nDate Of Payment = " + Bill.dateFormat.format(getDateOfPayment());
+        else
+            paidStr = ",\nDate Of Payment = NOT PAID!";
+
+        details += paidStr;
+
+        details += ",\nCompany = " + getCompany().toString() + ",\nValue = " + getValue();
+
+        return details;
     }
 }

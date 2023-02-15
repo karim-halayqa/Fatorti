@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // setting up userServiceDA
     public UserService getStoredSharedPrefUserService() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+       /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
         Gson gson = new Gson();
 
         String strObj = prefs.getString(RegisterActivity.DATAKEYJSON, "");
@@ -166,6 +166,12 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             userService = new UserServiceDA();
         }
+        */
+        ///------12 feb 2023 load and save to a firebase---
+
+        userService = new UserServiceDA();
+
+        /////-------
         return userService;
     }
 
